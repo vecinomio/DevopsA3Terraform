@@ -39,3 +39,15 @@ variable "vpcCIDR" {
   type        = string
   default     = "172.16.0.0/16"
 }
+
+variable "hostedZoneName" {
+  description = "The name pf the hosted zone"
+  type        = string
+  default     = "miit.pp.ua"
+}
+
+variable "certARN" {
+  description = "An ARN of the AWS public certificate"
+  type        = string
+  default     = "arn:aws:acm:us-east-1:899333571677:certificate/9a9bfd74-049a-4108-a484-175da35e0587"
+}

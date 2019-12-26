@@ -2,6 +2,7 @@ variable "orchestration" {}
 variable "createdby" {}
 variable "environment" {}
 variable "region" {}
+variable "vpcId" {}
 variable "igwId" {}
 variable "publicSubnet0id" {}
 variable "publicSubnet1id" {}

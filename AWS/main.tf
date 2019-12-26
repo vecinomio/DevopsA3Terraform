@@ -14,6 +14,19 @@ module "vpc" {
   vpcCIDR       = var.vpcCIDR
 }
 
+module "alb" {
+  source = "./modules/alb"
+
+  orchestration   = var.orchestration
+  createdby       = var.createdby
+  environment     = var.environment
+  hostedZoneName  = var.hostedZoneName
+  certArn         = var.certARN
+  vpcId           = module.vpc.vpcId
+  publicSubnet0id = module.vpc.PublicSubnet0id
+  publicSubnet1id = module.vpc.PublicSubnet1id
+}
+
 module "bastion" {
   source = "./modules/bastion"
 
