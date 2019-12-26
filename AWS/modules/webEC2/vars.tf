@@ -5,6 +5,7 @@ variable "region" {}
 variable "vpcId" {}
 variable "privateSubnet0id" {}
 variable "privateSubnet1id" {}
+variable "httpsListenerArn" {}
 variable "keyName" {}
 variable "hostedZoneName" {}
 variable "imageId" {

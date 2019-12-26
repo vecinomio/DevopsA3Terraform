@@ -111,7 +111,7 @@ resource "aws_lb_target_group" "webserversTG" {
 }
 
 resource "aws_lb_listener_rule" "webserversListenerRule" {
-  listener_arn = aws_lb_listener.httpsListener.arn
+  listener_arn = var.httpsListenerArn
   priority     = 1
 
   action {
@@ -124,6 +124,25 @@ resource "aws_lb_listener_rule" "webserversListenerRule" {
     }
   }
 }
+
+#-------------------------------------------------------------------------------
+# Defines Record Sets
+#-------------------------------------------------------------------------------
+resource "aws_route53_record" "main" {
+  zone_id = "${var.hostedZoneName}."
+  name    = "${var.hostedZoneName}."
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_eip.lb.public_ip}"]
+}
+resource "aws_route53_record" "www" {
+  zone_id = "${var.hostedZoneName}."
+  name    = "www.${var.hostedZoneName}."
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["${aws_eip.lb.public_ip}"]
+}
+
 #-------------------------------------------------------------------------------
 # Defines Launch Configuration for Webservers
 #-------------------------------------------------------------------------------

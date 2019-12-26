@@ -39,3 +39,18 @@ module "bastion" {
   publicSubnet0id = module.vpc.PublicSubnet0id
   publicSubnet1id = module.vpc.PublicSubnet1id
 }
+
+module "webEC2" {
+  source = "./modules/webEC2"
+
+  orchestration    = var.orchestration
+  createdby        = var.createdby
+  environment      = var.environment
+  region           = var.region
+  keyName          = var.keyName
+  vpcId            = module.vpc.vpcId
+  hostedZoneName   = var.hostedZoneName
+  privateSubnet0id = module.vpc.PrivateSubnet0id
+  privateSubnet1id = module.vpc.PrivateSubnet1id
+  httpsListenerArn = module.alb.httpsListenerArn
+}
