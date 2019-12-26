@@ -37,7 +37,6 @@ resource "aws_eip" "BastionEIP" {
     Orchestration = var.orchestration
     CreatedBy     = var.createdby
   }
-  depends_on = [var.igwId]
 }
 
 #-------------------------------------------------------------------------------

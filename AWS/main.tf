@@ -36,7 +36,6 @@ module "bastion" {
   region          = var.region
   keyName         = var.keyName
   vpcId           = module.vpc.vpcId
-  igwId           = module.vpc.igwId
   publicSubnet0id = module.vpc.PublicSubnet0id
   publicSubnet1id = module.vpc.PublicSubnet1id
 }

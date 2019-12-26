@@ -3,9 +3,10 @@ variable "createdby" {}
 variable "environment" {}
 variable "region" {}
 variable "vpcId" {}
-variable "publicSubnet0id" {}
-variable "publicSubnet1id" {}
+variable "privateSubnet0id" {}
+variable "privateSubnet1id" {}
 variable "keyName" {}
+variable "hostedZoneName" {}
 variable "imageId" {
   description = "Amazon Linux 2"
   type        = string
@@ -15,4 +16,9 @@ variable "instanceType" {
   description = "Type of EC2 instance"
   type        = string
   default     = "t2.micro"
+}
+variable "name" {
+  description = "The name for the related resources"
+  type        = string
+  default     = "webservers"
 }
