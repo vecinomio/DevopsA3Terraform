@@ -4,9 +4,9 @@ output "httpsListenerArn" {
 }
 output "albDnsName" {
   description = "The original DNS Name of the ALB"
-  value       = aws_lb_listener.appLB.dns_name
+  value       = aws_lb.appLB.dns_name
 }
-output "canonicalHostedZoneId" {
+output "lbCanonicalHostedZoneId" {
   description = "The canonical hosted zone ID of the load balancer"
-  value       = aws_lb_listener.appLB.zone_id
+  value       = aws_lb.appLB.zone_id
 }
