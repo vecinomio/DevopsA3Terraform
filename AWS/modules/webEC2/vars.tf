@@ -3,11 +3,15 @@ variable "createdby" {}
 variable "environment" {}
 variable "region" {}
 variable "vpcId" {}
+variable "keyName" {}
+variable "hostedZoneName" {}
+variable "hostedZoneId" {}
+variable "tomcatVersion" {}
 variable "privateSubnet0id" {}
 variable "privateSubnet1id" {}
 variable "httpsListenerArn" {}
-variable "keyName" {}
-variable "hostedZoneName" {}
+variable "albDnsName" {}
+variable "lbCanonicalHostedZoneId" {}
 variable "imageId" {
   description = "Amazon Linux 2"
   type        = string
