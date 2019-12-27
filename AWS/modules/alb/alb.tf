@@ -1,4 +1,8 @@
 #-------------------------------------------------------------------------------
+# To create resources run:
+# terraform apply -target=module.alb
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # Defines ALB Security Group
 #-------------------------------------------------------------------------------
 resource "aws_security_group" "albSG" {
@@ -52,7 +56,7 @@ resource "aws_lb" "appLB" {
 }
 
 #-------------------------------------------------------------------------------
-# Defines HTTP, HTTPS Listeners and Listener rule
+# Defines HTTP, HTTPS Listeners
 #-------------------------------------------------------------------------------
 resource "aws_lb_listener" "httpListener" {
   load_balancer_arn = aws_lb.appLB.arn
@@ -83,20 +87,6 @@ resource "aws_lb_listener" "httpsListener" {
   }
 }
 
-resource "aws_lb_listener_rule" "LbListenerRule" {
-  listener_arn = aws_lb_listener.httpsListener.arn
-  priority     = 2
-
-  action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.defaultTG.arn
-  }
-  condition {
-    host_header {
-      values = ["www.${var.hostedZoneName}"]
-    }
-  }
-}
 #-------------------------------------------------------------------------------
 # Defines Default Target Group
 #-------------------------------------------------------------------------------
