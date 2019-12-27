@@ -1,4 +1,8 @@
 # Creates Custom VPC in AWS with public and private subnets
+#-------------------------------------------------------------------------------
+# To create all infrastructure run:
+# terraform apply
+#-------------------------------------------------------------------------------
 provider "aws" {
   region = var.region
 }

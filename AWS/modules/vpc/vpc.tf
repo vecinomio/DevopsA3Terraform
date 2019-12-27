@@ -1,4 +1,9 @@
 #-------------------------------------------------------------------------------
+# To create resources run:
+# terraform apply -target=module.vpc
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
 # Defines Custom VPC
 #-------------------------------------------------------------------------------
 resource "aws_vpc" "vpcA3" {
@@ -134,91 +139,91 @@ resource "aws_network_acl" "PublicNetworkAcl" {
   }
 }
 
-#-------------------------------------------------------------------------------
-# Defines Elastic IPs for NAT Gateways
-#-------------------------------------------------------------------------------
-resource "aws_eip" "ElasticIP0" {
-  vpc = true
-  tags = {
-    Name          = "NatEIP0"
-    Environment   = var.environment
-    Orchestration = var.orchestration
-    CreatedBy     = var.createdby
-  }
-  depends_on = [aws_internet_gateway.IGW]
-}
-resource "aws_eip" "ElasticIP1" {
-  vpc = true
-  tags = {
-    Name          = "NatEIP1"
-    Environment   = var.environment
-    Orchestration = var.orchestration
-    CreatedBy     = var.createdby
-  }
-  depends_on = [aws_internet_gateway.IGW]
-}
-
-#-------------------------------------------------------------------------------
-# Defines Nat Gateways for 2 AZs
-#-------------------------------------------------------------------------------
-resource "aws_nat_gateway" "NatGateway0" {
-  allocation_id = aws_eip.ElasticIP0.id
-  subnet_id     = aws_subnet.PublicSubnet0.id
-  tags = {
-    Name          = "Nat0"
-    Environment   = var.environment
-    Orchestration = var.orchestration
-    CreatedBy     = var.createdby
-  }
-  depends_on = [aws_internet_gateway.IGW]
-}
-resource "aws_nat_gateway" "NatGateway1" {
-  allocation_id = aws_eip.ElasticIP1.id
-  subnet_id     = aws_subnet.PublicSubnet1.id
-  tags = {
-    Name          = "Nat1"
-    Environment   = var.environment
-    Orchestration = var.orchestration
-    CreatedBy     = var.createdby
-  }
-  depends_on = [aws_internet_gateway.IGW]
-}
-
-#-------------------------------------------------------------------------------
-# Defines Private Route Tables and their associations
-#-------------------------------------------------------------------------------
-resource "aws_route_table" "PrivateRouteTable0" {
-  vpc_id = aws_vpc.vpcA3.id
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.NatGateway0.id
-  }
-  tags = {
-    Name          = "PrivateRT0"
-    Environment   = var.environment
-    Orchestration = var.orchestration
-    CreatedBy     = var.createdby
-  }
-}
-resource "aws_route_table" "PrivateRouteTable1" {
-  vpc_id = aws_vpc.vpcA3.id
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.NatGateway1.id
-  }
-  tags = {
-    Name          = "PrivateRT1"
-    Environment   = var.environment
-    Orchestration = var.orchestration
-    CreatedBy     = var.createdby
-  }
-}
-
-resource "aws_route_table_association" "Private0" {
-  subnet_id      = aws_subnet.PrivateSubnet0.id
-  route_table_id = aws_route_table.PrivateRouteTable0.id
-}
-resource "aws_route_table_association" "Private1" {
-  subnet_id      = aws_subnet.PrivateSubnet1.id
-  route_table_id = aws_route_table.PrivateRouteTable1.id
-}
+# #-------------------------------------------------------------------------------
+# # Defines Elastic IPs for NAT Gateways
+# #-------------------------------------------------------------------------------
+# resource "aws_eip" "ElasticIP0" {
+#   vpc = true
+#   tags = {
+#     Name          = "NatEIP0"
+#     Environment   = var.environment
+#     Orchestration = var.orchestration
+#     CreatedBy     = var.createdby
+#   }
+#   depends_on = [aws_internet_gateway.IGW]
+# }
+# resource "aws_eip" "ElasticIP1" {
+#   vpc = true
+#   tags = {
+#     Name          = "NatEIP1"
+#     Environment   = var.environment
+#     Orchestration = var.orchestration
+#     CreatedBy     = var.createdby
+#   }
+#   depends_on = [aws_internet_gateway.IGW]
+# }
+#
+# #-------------------------------------------------------------------------------
+# # Defines Nat Gateways for 2 AZs
+# #-------------------------------------------------------------------------------
+# resource "aws_nat_gateway" "NatGateway0" {
+#   allocation_id = aws_eip.ElasticIP0.id
+#   subnet_id     = aws_subnet.PublicSubnet0.id
+#   tags = {
+#     Name          = "Nat0"
+#     Environment   = var.environment
+#     Orchestration = var.orchestration
+#     CreatedBy     = var.createdby
+#   }
+#   depends_on = [aws_internet_gateway.IGW]
+# }
+# resource "aws_nat_gateway" "NatGateway1" {
+#   allocation_id = aws_eip.ElasticIP1.id
+#   subnet_id     = aws_subnet.PublicSubnet1.id
+#   tags = {
+#     Name          = "Nat1"
+#     Environment   = var.environment
+#     Orchestration = var.orchestration
+#     CreatedBy     = var.createdby
+#   }
+#   depends_on = [aws_internet_gateway.IGW]
+# }
+#
+# #-------------------------------------------------------------------------------
+# # Defines Private Route Tables and their associations
+# #-------------------------------------------------------------------------------
+# resource "aws_route_table" "PrivateRouteTable0" {
+#   vpc_id = aws_vpc.vpcA3.id
+#   route {
+#     cidr_block     = "0.0.0.0/0"
+#     nat_gateway_id = aws_nat_gateway.NatGateway0.id
+#   }
+#   tags = {
+#     Name          = "PrivateRT0"
+#     Environment   = var.environment
+#     Orchestration = var.orchestration
+#     CreatedBy     = var.createdby
+#   }
+# }
+# resource "aws_route_table" "PrivateRouteTable1" {
+#   vpc_id = aws_vpc.vpcA3.id
+#   route {
+#     cidr_block     = "0.0.0.0/0"
+#     nat_gateway_id = aws_nat_gateway.NatGateway1.id
+#   }
+#   tags = {
+#     Name          = "PrivateRT1"
+#     Environment   = var.environment
+#     Orchestration = var.orchestration
+#     CreatedBy     = var.createdby
+#   }
+# }
+#
+# resource "aws_route_table_association" "Private0" {
+#   subnet_id      = aws_subnet.PrivateSubnet0.id
+#   route_table_id = aws_route_table.PrivateRouteTable0.id
+# }
+# resource "aws_route_table_association" "Private1" {
+#   subnet_id      = aws_subnet.PrivateSubnet1.id
+#   route_table_id = aws_route_table.PrivateRouteTable1.id
+# }

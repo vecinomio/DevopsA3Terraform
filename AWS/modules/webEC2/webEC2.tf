@@ -1,4 +1,8 @@
 #-------------------------------------------------------------------------------
+# To create resources run:
+# terraform apply -target=module.webEC2
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # Defines Webservers Security Group
 #-------------------------------------------------------------------------------
 resource "aws_security_group" "webserversSecurityGroup" {
@@ -128,13 +132,13 @@ resource "aws_lb_listener_rule" "webserversListenerRule" {
 #-------------------------------------------------------------------------------
 # Defines Record Sets
 #-------------------------------------------------------------------------------
-resource "aws_route53_record" "main" {
-  zone_id = "${var.hostedZoneName}."
-  name    = "${var.hostedZoneName}."
-  type    = "A"
-  ttl     = "300"
-  records = ["${aws_eip.lb.public_ip}"]
-}
+# resource "aws_route53_record" "main" {
+#   zone_id = "${var.hostedZoneName}."
+#   name    = "${var.hostedZoneName}."
+#   type    = "A"
+#   ttl     = "300"
+#   records = ["${aws_eip.lb.public_ip}"]
+# }
 resource "aws_route53_record" "www" {
   zone_id = "${var.hostedZoneName}."
   name    = "www.${var.hostedZoneName}."
