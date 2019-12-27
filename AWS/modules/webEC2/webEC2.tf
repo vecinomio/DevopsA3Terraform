@@ -132,19 +132,23 @@ resource "aws_lb_listener_rule" "webserversListenerRule" {
 #-------------------------------------------------------------------------------
 # Defines Record Sets
 #-------------------------------------------------------------------------------
-# resource "aws_route53_record" "main" {
-#   zone_id = "${var.hostedZoneName}."
-#   name    = "${var.hostedZoneName}."
-#   type    = "A"
-#   ttl     = "300"
-#   records = ["${aws_eip.lb.public_ip}"]
-# }
+resource "aws_route53_record" "main" {
+  zone_id = var.hostedZoneId
+  name    = "${var.hostedZoneName}."
+  type    = "A"
+
+  alias {
+    name                   = var.albDnsName
+    zone_id                = var.lbCanonicalHostedZoneId
+    evaluate_target_health = false
+  }
+}
 resource "aws_route53_record" "www" {
-  zone_id = "${var.hostedZoneName}."
+  zone_id = var.hostedZoneId
   name    = "www.${var.hostedZoneName}."
   type    = "CNAME"
   ttl     = "300"
-  records = ["${aws_eip.lb.public_ip}"]
+  records = [var.albDnsName]
 }
 
 #-------------------------------------------------------------------------------
@@ -153,18 +157,17 @@ resource "aws_route53_record" "www" {
 resource "aws_launch_configuration" "webserversLaunchConfig" {
   image_id                    = var.imageId
   instance_type               = var.instanceType
-  associate_public_ip_address = true
+  associate_public_ip_address = false
   key_name                    = var.keyName
   iam_instance_profile        = aws_iam_instance_profile.webserversProfile.name
   security_groups             = [aws_security_group.webserversSecurityGroup.id]
   user_data                   = data.template_file.webserversUserData.rendered
 
 }
-data "template_file" "bastionUserData" {
+data "template_file" "webserversUserData" {
   template = file("${path.module}/webserversUserData.sh")
   vars = {
-    region = var.region,
-    eipId  = aws_eip.BastionEIP.id
+    tomcat_version = var.tomcatVersion
   }
 }
 
@@ -174,6 +177,7 @@ data "template_file" "bastionUserData" {
 resource "aws_autoscaling_group" "webserversASG" {
   vpc_zone_identifier  = [var.privateSubnet0id, var.privateSubnet1id]
   launch_configuration = aws_launch_configuration.webserversLaunchConfig.id
+  target_group_arns    = [aws_lb_target_group.webserversTG.arn]
   desired_capacity     = 2
   max_size             = 3
   min_size             = 1
