@@ -41,13 +41,24 @@ variable "vpcCIDR" {
 }
 
 variable "hostedZoneName" {
-  description = "The name pf the hosted zone"
+  description = "The name of the exsisting hosted zone"
   type        = string
   default     = "miit.pp.ua"
+}
+variable "hostedZoneId" {
+  description = "An ID of the exsisting hosted zone"
+  type        = string
+  default     = "Z3054OS2WUR0EL"
 }
 
 variable "certARN" {
   description = "An ARN of the AWS public certificate"
   type        = string
-  default     = "arn:aws:acm:us-east-1:899333571677:certificate/9a9bfd74-049a-4108-a484-175da35e0587"
+  default     = "arn:aws:acm:us-east-1:899333571677:certificate/64095605-9aab-4da9-bb1e-daecdc0051de"
+}
+
+variable "tomcatVersion" {
+  description = "The desired version of Tomcat Web Server"
+  type        = string
+  default     = "9.0.30"
 }
