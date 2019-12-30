@@ -47,10 +47,9 @@ resource "aws_subnet" "PublicSubnet1" {
 }
 
 resource "aws_subnet" "PrivateSubnet0" {
-  vpc_id                  = aws_vpc.vpcA3.id
-  cidr_block              = "172.16.100.0/24"
-  availability_zone       = join("", [var.region, element(var.AZDefiners, 0)])
-  map_public_ip_on_launch = true
+  vpc_id            = aws_vpc.vpcA3.id
+  cidr_block        = "172.16.100.0/24"
+  availability_zone = join("", [var.region, element(var.AZDefiners, 0)])
   tags = {
     Name          = "PrivateSubnet0"
     Environment   = var.environment
@@ -59,10 +58,9 @@ resource "aws_subnet" "PrivateSubnet0" {
   }
 }
 resource "aws_subnet" "PrivateSubnet1" {
-  vpc_id                  = aws_vpc.vpcA3.id
-  cidr_block              = "172.16.101.0/24"
-  availability_zone       = join("", [var.region, element(var.AZDefiners, 1)])
-  map_public_ip_on_launch = true
+  vpc_id            = aws_vpc.vpcA3.id
+  cidr_block        = "172.16.101.0/24"
+  availability_zone = join("", [var.region, element(var.AZDefiners, 1)])
   tags = {
     Name          = "PrivateSubnet1"
     Environment   = var.environment
