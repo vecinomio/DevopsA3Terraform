@@ -11,6 +11,7 @@ function retryCommand() {
         eval $FUNCTION && echo $? && break || echo $?
     done
 }
+hostnamectl set-hostname webserver
 echo "-------------INSTALLING TOMCAT AND DEPLOY APP--------------"
 cd /tmp
 retryCommand 5 10 "yum install java-1.8.0-openjdk -y"
