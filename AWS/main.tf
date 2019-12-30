@@ -39,6 +39,8 @@ module "bastion" {
   environment     = var.environment
   region          = var.region
   keyName         = var.keyName
+  hostedZoneName  = var.hostedZoneName
+  hostedZoneId    = var.hostedZoneId
   vpcId           = module.vpc.vpcId
   publicSubnet0id = module.vpc.PublicSubnet0id
   publicSubnet1id = module.vpc.PublicSubnet1id

@@ -44,6 +44,17 @@ resource "aws_eip" "BastionEIP" {
 }
 
 #-------------------------------------------------------------------------------
+# Defines Record Set for Bastion Host
+#-------------------------------------------------------------------------------
+resource "aws_route53_record" "bastion" {
+  zone_id = var.hostedZoneId
+  name    = "bastion.${var.hostedZoneName}."
+  type    = "A"
+  ttl     = "60"
+  records = [aws_eip.BastionEIP.public_ip]
+}
+
+#-------------------------------------------------------------------------------
 # Defines Role, Policy and Profile for Bastion Host
 #-------------------------------------------------------------------------------
 resource "aws_iam_role" "BastionRole" {

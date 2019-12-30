@@ -6,6 +6,8 @@ variable "vpcId" {}
 variable "publicSubnet0id" {}
 variable "publicSubnet1id" {}
 variable "keyName" {}
+variable "hostedZoneName" {}
+variable "hostedZoneId" {}
 variable "imageId" {
   description = "Amazon Linux 2"
   type        = string
