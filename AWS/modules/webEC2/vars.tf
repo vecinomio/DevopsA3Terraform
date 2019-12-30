@@ -11,6 +11,7 @@ variable "privateSubnet0id" {}
 variable "privateSubnet1id" {}
 variable "httpsListenerArn" {}
 variable "albDnsName" {}
+variable "albArnSuffix" {}
 variable "lbCanonicalHostedZoneId" {}
 variable "imageId" {
   description = "Amazon Linux 2"

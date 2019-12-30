@@ -60,5 +60,6 @@ module "webEC2" {
   privateSubnet1id        = module.vpc.PrivateSubnet1id
   httpsListenerArn        = module.alb.httpsListenerArn
   albDnsName              = module.alb.albDnsName
+  albArnSuffix            = module.alb.albArnSuffix
   lbCanonicalHostedZoneId = module.alb.lbCanonicalHostedZoneId
 }

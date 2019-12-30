@@ -1,7 +1,6 @@
-#-------------------------------------------------------------------------------
 # To create resources run:
 # terraform apply -target=module.webEC2
-#-------------------------------------------------------------------------------
+
 #-------------------------------------------------------------------------------
 # Defines Webservers Security Group
 #-------------------------------------------------------------------------------
@@ -203,4 +202,17 @@ resource "aws_autoscaling_group" "webserversASG" {
       propagate_at_launch = true
     },
   ]
+}
+resource "aws_autoscaling_policy" "webserversASGpolicy" {
+  name                   = "webserversASGpolicy"
+  autoscaling_group_name = aws_autoscaling_group.webserversASG.name
+  policy_type            = "TargetTrackingScaling"
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ALBRequestCountPerTarget"
+      resource_label         = "${var.albArnSuffix}/${aws_lb_target_group.webserversTG.arn_suffix}"
+    }
+
+    target_value = 100.0
+  }
 }
