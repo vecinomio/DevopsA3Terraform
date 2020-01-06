@@ -65,7 +65,7 @@ EOF
   }
 }
 resource "aws_iam_role_policy" "webserversPolicy" {
-  name   = "BastionPolicy"
+  name   = "webserversPolicy"
   role   = aws_iam_role.webserversRole.name
   policy = <<EOF
 {
