@@ -51,7 +51,7 @@ variable "hostedZoneId" {
   default     = "Z3054OS2WUR0EL"
 }
 
-variable "certARN" {
+variable "certArn" {
   description = "An ARN of the AWS public certificate"
   type        = string
   default     = "arn:aws:acm:us-east-1:899333571677:certificate/64095605-9aab-4da9-bb1e-daecdc0051de"
