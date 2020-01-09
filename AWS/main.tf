@@ -25,7 +25,7 @@ module "alb" {
   createdby       = var.createdby
   environment     = var.environment
   hostedZoneName  = var.hostedZoneName
-  certArn         = var.certARN
+  certArn         = var.certArn
   vpcId           = module.vpc.vpcId
   publicSubnet0id = module.vpc.PublicSubnet0id
   publicSubnet1id = module.vpc.PublicSubnet1id
@@ -49,40 +49,55 @@ module "bastion" {
 module "webservers-blue-asg" {
   source = "./modules/webservers-asg"
 
-  env              = "live"
-  color            = "blue"
-  image-id         = "ami-00068cd7555f543d5"
-  instance-type    = "t2.micro"
-  key-name         = "devopsa3"
-  user-data        = "user-data-1"
-  set-identifier   = "api-blue"
-  ttl              = 60
-  weight           = 50
-  max-size         = 2
-  desired-capacity = 1
-  min-size         = 1
-  vpc-id           = module.vpc.vpcId
-  publicSubnet0id  = module.vpc.PublicSubnet0id
-  publicSubnet1id  = module.vpc.PublicSubnet1id
+  colour              = "blue"
+  image-id            = "ami-00068cd7555f543d5"
+  instance-type       = "t2.micro"
+  key-name            = "devopsa3"
+  set-identifier      = "api-blue"
+  ttl                 = 60
+  weight              = 100
+  max-size            = 2
+  desired-capacity    = 2
+  min-size            = 1
+  environment         = var.environment
+  orchestration       = var.orchestration
+  createdby           = var.createdby
+  cert-arn            = var.certArn
+  hosted-zone-name    = var.hostedZoneName
+  hosted-zone-id      = var.hostedZoneId
+  tomcat-version      = var.tomcatVersion
+  vpc-id              = module.vpc.vpcId
+  public-subnet-0-id  = module.vpc.PublicSubnet0id
+  public-subnet-1-id  = module.vpc.PublicSubnet1id
+  private-subnet-0-id = module.vpc.PrivateSubnet0id
+  private-subnet-1-id = module.vpc.PrivateSubnet1id
 }
 
 module "webservers-green-asg" {
-  source           = "./modules/webservers-asg"
-  env              = "live"
-  color            = "green"
-  image-id         = "ami-00068cd7555f543d5"
-  instance-type    = "t2.micro"
-  key-name         = "devopsa3"
-  user-data        = "user-data-2"
-  set-identifier   = "api-green"
-  ttl              = 60
-  weight           = 50
-  max-size         = 2
-  desired-capacity = 1
-  min-size         = 1
-  vpc-id           = module.vpc.vpcId
-  publicSubnet0id  = module.vpc.PublicSubnet0id
-  publicSubnet1id  = module.vpc.PublicSubnet1id
+  source = "./modules/webservers-asg"
+
+  colour              = "green"
+  image-id            = "ami-00068cd7555f543d5"
+  instance-type       = "t2.micro"
+  key-name            = "devopsa3"
+  set-identifier      = "api-green"
+  ttl                 = 60
+  weight              = 0
+  max-size            = 2
+  desired-capacity    = 0
+  min-size            = 0
+  environment         = var.environment
+  orchestration       = var.orchestration
+  createdby           = var.createdby
+  cert-arn            = var.certArn
+  hosted-zone-name    = var.hostedZoneName
+  hosted-zone-id      = var.hostedZoneId
+  tomcat-version      = var.tomcatVersion
+  vpc-id              = module.vpc.vpcId
+  public-subnet-0-id  = module.vpc.PublicSubnet0id
+  public-subnet-1-id  = module.vpc.PublicSubnet1id
+  private-subnet-0-id = module.vpc.PrivateSubnet0id
+  private-subnet-1-id = module.vpc.PrivateSubnet1id
 }
 
 # module "webEC2" {
